@@ -3,6 +3,7 @@ package ced.usermanagement.security;
 import ced.usermanagement.data.DetailsUserDate;
 import ced.usermanagement.model.User;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +23,7 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    public static final String TOKEN_PASSWORD =
+    public static final String TOKEN_PASSWORD = System.getenv("TOKEN_PASSWORD");
 
     public static final int TOKEN_EXP = 600_000;
 
@@ -58,7 +59,9 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
         String token = JWT.create()
                 .withSubject(detailsUserDate.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXP))
-                .sign()
+                .sign(Algorithm.HMAC512(TOKEN_PASSWORD));
 
+        response.getWriter().write(token);
+        response.getWriter().flush();
     }
 }

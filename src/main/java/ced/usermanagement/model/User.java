@@ -1,11 +1,12 @@
 package ced.usermanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity(name="users")
 public class User {
@@ -22,6 +23,7 @@ public class User {
     @Column(unique = true)
     private String login;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public String getName() {
