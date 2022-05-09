@@ -31,6 +31,11 @@ public class UserController {
         this.repository = repository;
     }
 
+    @GetMapping("/")
+    public String version(){
+        return "1.0.2";
+    }
+
     @PostMapping("/create")
     public ResponseEntity<User> create(@RequestBody User user) {
         user.setPassword(encoder.encode(user.getPassword()));
