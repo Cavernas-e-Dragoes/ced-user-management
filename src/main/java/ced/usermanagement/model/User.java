@@ -7,8 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 @Entity(name="users")
+@Table(indexes = { @Index(name = "IDX_LOGIN", columnList = "login") })
 public class User {
 
     @Id
